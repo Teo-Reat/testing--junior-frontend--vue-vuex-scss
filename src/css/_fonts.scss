@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+@mixin font-title {
+  color: $white;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 36px;
+}
+
+@mixin font-subtitle {
+  color: $grey-middle;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@mixin font-regular {
+  color: $grey-air;
+  line-height: 16px;
+}
+
+@mixin font-description {
+  color: $white;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+@media (min-width: 576px) {}
+
+@media (min-width: 768px) {}
+
+@media (min-width: 1024px) {}
+
+@media (min-width: 1410px) {}
+
+@media (min-width: 1680px) {}

@@ -1,0 +1,89 @@
+.home {
+
+  &__movie {
+    margin: {
+      top: 52px;
+    };
+  }
+}
+
+.movie {
+  display: flex;
+  background: $grey-dark;
+
+  &__image {
+    height: 168px;
+    max-width: 100%;
+
+    &-wrapper {
+      background: $grey-light;
+      width: 168px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+  }
+
+  &__text {
+    padding: {
+      top: 32px;
+      right: 32px;
+      bottom: 32px;
+      left: 24px;
+    };
+
+    &-title {
+      @include font-title;
+    }
+
+    &-inner {
+      margin: {
+        top: 12px;
+      };
+    }
+
+    &-year {
+      @include font-subtitle;
+    }
+
+    &-genre {
+      @include font-subtitle;
+    }
+
+    &-directors {
+      margin: {
+        top: 8px;
+      };
+    }
+
+    &-director {
+      @include font-subtitle;
+
+      &-description {
+        @include font-subtitle;
+      }
+    }
+
+    &-actors {
+      margin: {
+        top: 10px;
+      };
+    }
+
+    &-actor {
+      @include font-regular;
+
+      &-description {
+        @include font-subtitle;
+      }
+    }
+
+    &-description {
+      @include font-description;
+      margin: {
+        top: 14px;
+      };
+    }
+  }
+}

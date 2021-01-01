@@ -8,11 +8,23 @@
       <div class="filters__checkbox-wrapper">
         <!--          С чекбоксами немного не ясно, если они не могут быть зажаты одновременно, то логичнее делать radio-->
         <div class="filters__checkbox-inner">
-          <input class="filters__checkbox" type="checkbox" id="sort-by-name" name="sort-by-name" value="yes">
+          <input class="filters__checkbox"
+                 type="checkbox"
+                 id="sort-by-name"
+                 name="sort-by-name"
+                 v-model="sortBy"
+                 true-value="title"
+                 false-value="unsorted">
           <label class="filters__checkbox-label" for="sort-by-name">Отсортировать по названию</label>
         </div>
         <div class="filters__checkbox-inner">
-          <input class="filters__checkbox" type="checkbox" id="sort-by-year" name="sort-by-year" value="yes">
+          <input class="filters__checkbox"
+                 type="checkbox"
+                 id="sort-by-year"
+                 name="sort-by-year"
+                 v-model="sortBy"
+                 true-value="year"
+                 false-value="unsorted">
           <label class="filters__checkbox-label" for="sort-by-year">Отсортировать по году</label>
         </div>
       </div>
@@ -26,7 +38,7 @@
       <img class="loader__image" src="../assets/loader.svg" alt="Loader">
     </div>
 
-    <div class="home__movie movie" v-else v-for="movie in sortedArray" :key="movie.id">
+    <div class="home__movie movie" v-else v-for="movie in sortedItems" :key="movie.id">
 
       <div class="movie__image-wrapper">
         <img class="movie__image" :src="movie.poster" alt="Poster">
@@ -68,7 +80,8 @@ export default {
 
   data: () => {
     return {
-      movies: null,
+      sortBy: 'unsorted',
+      movies: [],
       params: '',
       load: false,
       error: '',
@@ -84,8 +97,43 @@ export default {
             this.data = null;
             this.error = error.response.data.error;
           })
-          .finally(() => setTimeout(() => this.load = false, 5000));
+          .finally(() => this.load = false);
     },
+  },
+
+  computed: {
+    // eslint-disable-next-line
+    sortedItems: function () { //TODO
+      if (this.sortBy === 'unsorted') {
+        return this.movies;
+      }
+
+      if (this.sortBy === 'title') {
+        // eslint-disable-next-line
+        return this.movies.sort(function (a, b) {
+          if (a.title > b.title) {
+            return 1;
+          }
+          if (a.title < b.title) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+
+      if (this.sortBy === 'year') {
+        // eslint-disable-next-line
+        return this.movies.sort(function (a, b) {
+          if (a.year > b.year) {
+            return 1;
+          }
+          if (a.year < b.year) {
+            return -1;
+          }
+          return 0;
+        });
+      }
+    }
   },
 
   mounted() {

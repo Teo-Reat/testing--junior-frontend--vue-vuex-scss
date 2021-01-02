@@ -3,6 +3,7 @@
   &__title {
     background: $primary;
     @include font-title--main;
+    box-shadow: 0 8px 7px rgba(0, 0, 0, 0.28);
     padding: {
       top: 36px;
       bottom: 16px;
@@ -142,6 +143,14 @@
   display: flex;
   background: $grey-dark;
   position: relative;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  transition: .3s;
+  top: 0;
+
+  &:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    top: -8px;
+  }
 
   &__image {
     height: 168px;

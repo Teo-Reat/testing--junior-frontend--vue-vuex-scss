@@ -29,16 +29,13 @@
         </div>
       </div>
     </div>
-
-    <div class="home__button-wrapper">
+    <div class="home__button-wrapper"><!--TODO-->
       <button class="home__button" type="button">Назад к списку</button>
     </div>
-
-    <div class="home__loader loader" v-if="load">
+    <div class="home__loader loader" v-if="getLoader">
       <img class="loader__image" src="../assets/loader.svg" alt="Loader">
     </div>
-
-    <div class="home__movie movie" v-else v-for="movie in sortedItems" :key="movie.id">
+    <div class="home__movie movie" v-else v-for="movie in sortedList" :key="movie.id">
 
       <div class="movie__image-wrapper">
         <img class="movie__image" :src="movie.poster" alt="Poster">
@@ -48,7 +45,7 @@
         <div class="movie__text-time-wrapper" v-if="movie.collapse.duration">
           <span class="movie__text-time">{{ movie.collapse.duration[0] }}</span>
         </div>
-        <div class="movie__text-title">{{ movie.title }}</div>
+        <a class="movie__text-title" href="#">{{ movie.title }}</a>
         <div class="movie__text-inner">
           <span class="movie__text-year">{{ movie.year }}, </span>
           <span class="movie__text-genres">
@@ -71,8 +68,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import axios from "axios";
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
@@ -81,63 +77,39 @@ export default {
   data: () => {
     return {
       sortBy: 'unsorted',
-      movies: [],
       params: '',
-      load: false,
-      error: '',
     }
   },
 
   methods: {
-    getList() {
-      this.load = true;
-      axios.get('https://floating-sierra-20135.herokuapp.com/api/movies', {params: this.params})
-          .then(response => (this.movies = response.data.data))
-          .catch((error) => {
-            this.data = null;
-            this.error = error.response.data.error;
-          })
-          .finally(() => this.load = false);
+    ...mapActions(['fetchMovies']),
+
+    sortMoviesByTitle (d1, d2) {
+      return (d1.title.toLowerCase() > d2.title.toLowerCase()) ? 1 : -1;
     },
-  },
-
-  computed: {
-    // eslint-disable-next-line
-    sortedItems: function () { //TODO
-      if (this.sortBy === 'unsorted') {
-        return this.movies;
-      }
-
-      if (this.sortBy === 'title') {
-        // eslint-disable-next-line
-        return this.movies.sort(function (a, b) {
-          if (a.title > b.title) {
-            return 1;
-          }
-          if (a.title < b.title) {
-            return -1;
-          }
-          return 0;
-        });
-      }
-
-      if (this.sortBy === 'year') {
-        // eslint-disable-next-line
-        return this.movies.sort(function (a, b) {
-          if (a.year > b.year) {
-            return 1;
-          }
-          if (a.year < b.year) {
-            return -1;
-          }
-          return 0;
-        });
-      }
+    sortMoviesByYear (d1, d2) {
+      return (d1.year > d2.year) ? 1 : -1;
     }
   },
 
+  computed: {
+    ...mapGetters(['getMovies', 'getLoader']),
+
+    sortedList: function() {
+      let mapped = JSON.parse(JSON.stringify(this.getMovies))
+      console.log(mapped)
+
+      switch(this.sortBy){
+        case 'title': return mapped.sort(this.sortMoviesByTitle);
+        case 'year': return mapped.sort(this.sortMoviesByYear);
+        case 'unsorted': return this.getMovies;
+        default: return this.getMovies;
+      }
+    },
+  },
+
   mounted() {
-    this.getList()
+    this.fetchMovies()
   }
 }
 </script>

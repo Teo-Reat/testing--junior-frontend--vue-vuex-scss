@@ -1,0 +1,32 @@
+@media (min-width: 576px) {
+  .app {
+    &__title {
+      letter-spacing: 0.21em;
+    }
+  }
+
+  .filters {
+    &__checkbox {
+      &-inner:not(:first-child) {
+        margin: {
+          left: 35px;
+          top: 0;
+        };
+      }
+
+      &-wrapper {
+        display: flex;
+      }
+    }
+  }
+
+  .movie {
+    display: flex;
+
+    &__image {
+      &-wrapper {
+        width: 168px;
+      }
+    }
+  }
+}

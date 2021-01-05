@@ -1,0 +1,16 @@
+@media (min-width: 1024px) {
+  .loader {
+    top: 50%;
+    margin-top: -68px;
+  }
+
+  .movie {
+    &__text {
+      &-time {
+        &-wrapper {
+          top: 32px;
+        }
+      }
+    }
+  }
+}

@@ -32,44 +32,49 @@
     <div class="home__loader loader" v-if="getLoader">
       <img class="loader__image" src="../assets/loader.svg" alt="Loader">
     </div>
-    <div class="home__movie movie" v-else v-for="movie in sortedList" :key="movie.id">
+    <div class="home__movie-wrapper"  v-else>
+      <movie class="home__movie movie" v-for="movie in sortedList" :movie="movie" :key="movie.id">
 
-      <div class="movie__image-wrapper">
-        <img class="movie__image" :src="movie.poster" alt="Poster">
-      </div>
-
-      <div class="movie__text">
-        <div class="movie__text-time-wrapper" v-if="movie.collapse.duration">
-          <span class="movie__text-time">{{ movie.collapse.duration[0] }}</span>
+        <div class="movie__image-wrapper">
+          <img class="movie__image" :src="movie.poster" alt="Poster">
         </div>
-        <router-link class="movie__text-title" :to="{ name: 'About', params: { id: movie.id }}">{{ movie.title }}</router-link>
-        <div class="movie__text-inner">
-          <span class="movie__text-year">{{ movie.year }}, </span>
-          <span class="movie__text-genres">
+
+        <div class="movie__text">
+          <div class="movie__text-time-wrapper" v-if="movie.collapse.duration">
+            <span class="movie__text-time">{{ movie.collapse.duration[0] }}</span>
+          </div>
+          <router-link class="movie__text-title" :to="{ name: 'About', params: { id: movie.id }}">{{ movie.title }}</router-link>
+          <div class="movie__text-inner">
+            <span class="movie__text-year">{{ movie.year }}, </span>
+            <span class="movie__text-genres">
           <span class="movie__text-genre" v-for="(genre, key) in movie.genres" :key="key">{{ genre }}</span>
         </span>
+          </div>
+          <div class="movie__text-directors">
+            <span class="movie__text-director-description">режиссёр: </span>
+            <span class="movie__text-director" v-for="(director, key) in movie.directors" :key="key">{{ director }}</span>
+          </div>
+          <div class="movie__text-actors">
+            <span class="movie__text-actor-description">Актёры: </span>
+            <span class="movie__text-actor" v-for="(actor, key) in movie.actors" :key="key">{{ actor }}</span>
+          </div>
+          <div class="movie__text-description" v-if="movie.description">{{ movie.description }}</div>
         </div>
-        <div class="movie__text-directors">
-          <span class="movie__text-director-description">режиссёр: </span>
-          <span class="movie__text-director" v-for="(director, key) in movie.directors" :key="key">{{ director }}</span>
-        </div>
-        <div class="movie__text-actors">
-          <span class="movie__text-actor-description">Актёры: </span>
-          <span class="movie__text-actor" v-for="(actor, key) in movie.actors" :key="key">{{ actor }}</span>
-        </div>
-        <div class="movie__text-description" v-if="movie.description">{{ movie.description }}</div>
-      </div>
+      </movie>
     </div>
 
   </div>
 </template>
 
 <script>
+import Movie from '@/components/Movie';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    Movie
+  },
 
   data: () => {
     return {

@@ -17,23 +17,13 @@ export default {
 	},
 
 	getters: {
-		getMovies(state) {
-			return state.movies
-		},
-
-		getLoader (state) {
-			return state.load
-		},
+		getMovies: (state) => state.movies,
+		getLoader: (state) => state.load,
 	},
 
 	mutations: {
-		updateMovies(state, movies) {
-			state.movies = movies
-		},
-
-		updateLoad (state, load) {
-			state.load = load
-		}
+		updateMovies: (state, movies) => { state.movies = movies },
+		updateLoad: (state, load) => { state.load = load }
 	},
 	state: {
 		movies: [],
